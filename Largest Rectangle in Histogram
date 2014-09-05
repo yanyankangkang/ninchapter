@@ -1,0 +1,29 @@
+
+//Largest Rectangle in Histogram 
+/*
+this program uses data structure stack. the stack keep the property of increasing order. Because the lowest histogram decide
+the height relvant histogram region. So if we find height[i] < height[j] (height[i] in stack, height[j] out of stack, i < j), then 
+the index in stack next to the top is most left for height[i] to reach. J - 1 is the most right for height[i] to reach.  
+*/
+public class Solution {
+  	  public int largestRectangleArea(int[] height) {
+		  if (height.length == 0)
+			  return 0;
+		  Stack<Integer> s = new Stack<Integer>();
+		 
+		  int length,Height;
+		  s.push(0);
+		  int Max = height[0];
+		  for (int i = 1; i <= height.length; i++){          
+			  int temp = (i == height.length ? -1 : height[i]); 
+			  while (!s.empty() && height[s.peek()] > temp){  //must first check if it is empty.
+				Height = height[s.pop()];         //beacause s.top no longer meet requirements, it should be height to figure out.
+			    length = s.empty() ? i : i - s.peek() - 1;  //the index of s.peek and i are exclude from length.
+				Max = Math.max(Max, length * Height);
+			  }
+			  s.push(i);	
+			 
+		  }
+		  return Max;
+	    }
+}
