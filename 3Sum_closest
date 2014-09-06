@@ -1,0 +1,54 @@
+//hash is not a good solution to this problem, and we better two pointer strategy. 
+//Although this is 3-sum, we can first fix another two position and change pointer, one needs attention that the 
+//dynamic pointer had better to be smallers number in this three number ensuring no recaculation
+
+package Sum_Closest;
+import java.util.*;
+public class Solution {
+	  class twoSum{
+		  int a, b;
+		  int sum;
+		  public twoSum(int a, int b){      
+			  a = this.a;
+			  b = this.b;
+			  }    
+		  public int hashcode(){
+			  return a + b;
+		  }
+		   public boolean equals(Object o){    
+			   return (o instanceof twoSum) && (a ==((twoSum)o).a) && (b ==((twoSum)o).b) ;
+		   }    
+	  }
+	  public int threeSumClosest(int[] num, int target) {
+		  int res = -1;
+	      Arrays.sort(num);
+	      int left = 0, right = num.length - 1;
+	      int MIN = Integer.MAX_VALUE;
+	      for (int i = 0; i < num.length - 2; i++){
+	    	  left = i + 1;
+	    	  right = num.length - 1;
+	    	  while (left < right){
+	    		  int sum = num[left] + num[right] + num[i];
+	    		//  System.out.println(sum);
+	    		  if (sum  == target)
+	    			  return target;
+	    		  else if (sum < target){
+	    			  left++;
+	    		  }
+	    		  else{
+	    			  right--;
+	    		  }
+	    		  if (MIN > Math.abs(target - sum)){
+	    			  MIN = Math.abs(target - sum);
+	    			  res = sum;
+	    		  }
+	    	  }
+	      }
+	      return res;
+	    }
+	  public static void main(String[] Args){
+		  Solution s = new Solution();
+		  int [] num = {0,0,0};
+		  System.out.print(s.threeSumClosest(num, 1));
+	  }
+}
